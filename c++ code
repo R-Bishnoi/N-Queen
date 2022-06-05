@@ -1,0 +1,183 @@
+// leetcode N-Queen 
+
+
+class Solution {
+public:
+    
+    
+bool is_safe(vector<string>&board , int row ,int col ,int n){
+    
+    int org_row=row;
+    int org_col=col;
+    
+while(row>=0 && col>=0){
+    if(board[row][col]=='Q')return false;
+    row--;
+    col--;
+}
+    
+    row=org_row;
+    col=org_col;
+    
+
+while(col>=0){
+    if(board[row][col]=='Q')return false;
+    col--;
+}
+  
+    col=org_col;
+    
+    
+while(row<n && col>=0){
+    if(board[row][col]=='Q')return false;
+    row++;
+    col--;
+}
+    
+return true;
+    
+    
+}
+
+    
+    
+    
+    
+void solve(vector<string>&board,vector<vector<string>>&ans,int n,int col){
+    if(col==n){
+        ans.push_back(board);
+        return;
+    }
+    
+    
+    for(int row=0;row<n;row++){
+       if(is_safe(board,row,col,n)){
+           board[row][col]='Q';
+           solve(board,ans,n,col+1);
+           board[row][col]='.';
+       }
+        
+    }
+    
+}    
+    
+    
+    
+vector<vector<string>> solveNQueens(int n) {
+      
+        string s(n,'.');
+    vector<vector<string>>ans;
+        vector<string>board(n,s);
+        
+ solve(board,ans,n,0);
+        
+        return ans;
+        
+        
+    }
+    
+    
+    
+};
+
+
+
+
+
+
+
+
+
+
+
+
+/************************************************GFG****************************************/
+
+class Solution{
+public:
+
+bool is_safe(vector<vector<int>>&board,int row,int col,int n){
+    int org_row=row;
+    int org_col=col;
+    
+  // condition 1st \
+  
+ while(row>=0 && col>=0){
+     if(board[row][col]==1)return false;
+     row--;
+     col--;
+ }
+ 
+ row=org_row;
+ col=org_col;
+ 
+ //2nd cond
+ while(col>=0){
+     if(board[row][col]==1)return false;
+     col--;
+ }
+ 
+ col=org_col;
+ 
+ // 3rd cond.
+ while(row<n && col>=0){
+     if(board[row][col]==1)return false;
+     row++;
+     col--;
+ }
+    
+ return true;   
+    
+}
+
+
+
+void solve(vector<vector<int>>&board,vector<vector<vector<int>>>&ans ,int n,int col){
+   
+   if(col==n){
+       ans.push_back(board);
+       return;
+    }  
+ 
+ for(int row=0;row<n;row++){
+     
+     if(is_safe(board,row,col,n)){
+         board[row][col]=1;
+         solve(board,ans,n,col+1);
+         board[row][col]=0;
+                       }
+            }
+ 
+ }
+
+
+
+
+ vector<vector<int>> nQueen(int n) {
+       
+       vector<vector<int>>board(n,vector<int>(n,0));
+       vector<vector<vector<int>>>ans;
+       
+       
+       solve(board,ans,n,0);
+       
+        vector<vector<int>>v;
+   
+   for(int i=0;i<ans.size();i++){
+       vector<int>sol;
+       for(int j=0;j<n;j++){
+           for(int k=0;k<n;k++){
+               if(ans[i][j][k]==1)sol.push_back(k+1);
+           }
+       }
+   v.push_back(sol);
+   }  
+       
+    sort(v.begin(),v.end());   
+       return v;
+       
+       
+    }
+};
+
+
